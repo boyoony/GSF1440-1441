@@ -172,3 +172,196 @@ featureCounts \
   ${BAMS}
   
 done
+
+
+
+
+############################
+#Downloading SAILOR Program
+############################
+
+#In Carbonate
+#Make directory for analysis
+
+cd /geode2/home/u010/by6/Carbonate
+
+mkdir GSF1440_1441
+	
+
+#Load the singularity module
+
+module load singularity
+
+
+
+############################
+#Moving all files needed for SAILOR to Carbonate (not in a directory) 
+#############################
+
+#Go to genome directory 
+
+cd /N/slate/by6/GSF1440_1441/genome
+
+
+#copy and paste assembly.fasta files to Carbonate 
+
+cp assembly.fasta /geode2/home/u010/by6/Carbonate
+
+
+#Go to GSF1440_1441 folder
+
+cd /N/slate/by6/GSF1440_1441
+
+
+#Make a folder for SAILOR
+
+mkdir sailor 
+
+
+#Go to aligned directory
+
+cd /N/slate/by6/GSF1440_1441/results/aligned 
+
+
+# create merged bam file (only if you have multiple replicates) 
+
+module load samtools
+
+
+samtools merge -@ 8 ../../sailor/GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam GSF1440-WW205-3_S9_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam GSF1441-WW205-1_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam
+
+samtools merge -@ 8 ../../sailor/GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam GSF1440-WW206-3_S10_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam GSF1441-WW206-1_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam
+
+
+
+#Go to Carbonate 
+
+cd /geode2/home/u010/by6/Carbonate
+
+
+#Copy and paste merged bam files 
+
+cp /N/slate/by6/GSF1440_1441/sailor/* .
+
+
+
+#########################
+#Get C. elegans reference genome file with SNPs
+#########################
+
+#On mac desktop, go to HundleyLab server - protocols - Bioinformatics - Bioinformatics notes - Files for Sailor 
+
+#Copy and paste this to your desktop - c.elegans.WS275.snps.sorted.bed
+
+#In mac desktop terminal, copy the file to Carbonate 
+
+scp /Users/yang/Desktop/c.elegans.WS275.snps.sorted.bed by6@carbonate.uits.iu.edu: 
+	
+
+#In Carbonate (not in a directory), you should have bam files, snps.sorted.bed file, assembly.fasta file
+
+
+
+
+############################
+#Mark downloaded program as executable within directory
+############################
+
+chmod +x sailor-1.0.4
+	
+./sailor-1.0.4
+	
+y
+
+
+#######
+#Open yaml file with vim and edit filenames
+#######
+
+# open .yaml file
+	
+vim ce11_example.yaml
+	
+i
+	
+
+
+# update filenames using arrow keys
+#GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam
+#GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam
+#assembly.fasta
+#c.elegans.WS275.snps.sorted.bed
+
+
+# You can put only one file each. If you have multiple files, perform SAILOR multiple times. 
+	
+# save and quit (ESC - shift+ZZ)
+	
+
+# rename .yaml file
+	
+mv ce11_example.yaml GSF1440-WW205.yaml
+	
+
+# run sailor
+	
+./sailor-1.0.4 GSF1440-WW205.yaml
+
+
+#Repeat this for another file
+
+cp GSF1440-WW205.yaml GSF1440-WW206.yaml
+
+
+#####################
+#Open yaml file with vim and edit filenames
+#####################
+
+# open .yaml file
+	
+vim GSF1440-WW206.yaml
+	
+i
+	
+
+# update filenames using arrow keys
+
+#GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.bam
+	
+# save and quit (ESC - shift+ZZ)
+	
+
+# run sailor
+	
+./sailor-1.0.4 GSF1440-WW206.yaml
+
+
+
+#####################
+#Interpreting the SAILOR data 
+#####################
+
+#In the results folder, 
+
+less -s GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed
+
+
+
+#Secure copy and paste onto mac desktop
+#In the mac desktop, 
+
+scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440-WW205/results/*\.bed ~/Desktop/
+
+scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440_WW206/results/*\.bed ~/Desktop/
+
+
+#Open in excel file 
+
+
+#Annotation 
+
+
+
+
+
+scp /Users/yang/Desktop/GSF1440* by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
