@@ -343,8 +343,7 @@ i
 
 #In the results folder, 
 
-less -s GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed
-
+less -s GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed
 
 
 #Secure copy and paste onto mac desktop
