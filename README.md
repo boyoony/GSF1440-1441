@@ -351,7 +351,7 @@ less -s GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorte
 
 scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440-WW205/results/*\.bed ~/Desktop/
 
-scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440_WW206/results/*\.bed ~/Desktop/
+scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440-WW206/results/*\.bed ~/Desktop/
 
 
 #Open in excel file 
