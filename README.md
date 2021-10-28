@@ -49,35 +49,31 @@ cd /N/project/HundleyLab
 
 # Secure copy and paste files from HundleyLab project space 
 
-scp GSF1440-WW20 by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
-scp GSF1441-WW20 by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
+scp GSF1440-WW20* by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
+scp GSF1441-WW20* by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
 
-
-scp GSF1440-WW205-2_S5_R1_001_trimmed.fq.gz by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
-#GSF1440-WW205-3_S9_R1_001_trimmed.fq.gz
-#GSF1440-WW206-2_S6_R1_001_trimmed.fq.gz
-#GSF1440-WW206-3_S10_R1_001_trimmed.fq.gz
-
-#GSF1441-WW205-1_S5_R1_001_trimmed.fq.gz
-#GSF1441-WW206-1_S6_R1_001_trimmed.fq.gz
-
-GSF1440-WW205
 
 # Unzip all files pasted 
 
-gunzip GSF2848*	
+gunzip GSF1440-WW205-2_S5_R1_001_trimmed.fq.gz
+gunzip GSF1440-WW205-3_S9_R1_001_trimmed.fq.gz
+gunzip GSF1440-WW206-2_S6_R1_001_trimmed.fq.gz
+gunzip GSF1440-WW206-3_S10_R1_001_trimmed.fq.gz
+
+gunzip GSF1441-WW205-1_S5_R1_001_trimmed.fq.gz
+gunzip GSF1441-WW206-1_S6_R1_001_trimmed.fq.gz
 
 
 ################################
 ## Generate STAR Genome Index ##
 ################################
 	
-# Make a directory to store the genome files in the GSF2848 folder 
+# Make a directory to store the genome files in the GSF1440_1441 folder 
 	
 mkdir -p genome
 
 
-# Then go back to /N/slate/by6/GSF2848 Always go back when you run any alignment etc. 
+# Then go back to /N/slate/by6/GSF1440_1441 Always go back when you run any alignment etc. 
 
 	
 # Download and unpack the genome assembly.
@@ -118,7 +114,7 @@ mkdir -p results/aligned
   
 # Align the reads.
 	
-FASTQ=$GSF2848*
+FASTQ=$GSF144*
 	
   
 	for FASTQ in ${FASTQ[@]}; do
@@ -137,7 +133,7 @@ FASTQ=$GSF2848*
 	    --outSAMtype BAM SortedByCoordinate
 	done
 
-##Following has to be done additionally_20210817
+
 
 # Indexing the BAM files.
 
@@ -148,7 +144,9 @@ for BAM in ${BAMS[@]}; do
   done
   
 #remove genome* and results* files
-  
+ 
+ 
+ 
   ####################
 ## Count Features ##
 ####################
