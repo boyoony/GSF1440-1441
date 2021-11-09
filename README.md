@@ -357,10 +357,51 @@ scp by6@carbonate.uits.iu.edu:/geode2/home/u010/by6/Carbonate/GSF1440-WW206/resu
 #Open in excel file 
 
 
-#Annotation 
+
+#####################
+# SAILOR ANNOTATION #
+#####################
+
+# Create sailor directory on slate
+
+# Transfer files from Carbonate to sailor directory
+# In Carbonate results directory
+
+cd /geode2/home/u010/by6/Carbonate/GSF1440-WW205/results
+
+scp *.bed /N/slate/by6/GSF1440_1441/sailor
+
+cd /geode2/home/u010/by6/Carbonate/GSF1440-WW206/results
+
+scp *.bed /N/slate/by6/GSF1440_1441/sailor
 
 
+# copy WS275 files to sailor directory
+# in Desktop
+
+cd ~/Desktop
+
+scp annotation/c.elegans.WS275.annotation.final.bed by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441/sailor
+
+scp annotation/c_elegans.PRJNA13758.WS275.canonical_geneset.gtf by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441/sailor
+
+scp annotation/annotator.sailor.py by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441/sailor
 
 
+# in slate sailor directory
 
-scp /Users/yang/Desktop/GSF1440* by6@carbonate.uits.iu.edu:/N/slate/by6/GSF1440_1441
+cd /N/slate/by6/GSF1440_1441/sailor
+
+conda install -c bioconda pybedtools
+
+y
+
+
+# run annotation
+
+python3 annotator.sailor.py -h
+
+python3 annotator.sailor.py --gtf c_elegans.PRJNA13758.WS275.canonical_geneset.gtf --fwd GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed --rev GSF1440-WW205-2_S5_R1_001_trimmed.fq_Aligned.sortedByCoord.out.rev.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed --wb c.elegans.WS275.annotation.final.bed --o /N/slate/by6/GSF1440_1441/sailor/adr-2.annotated.sites.csv
+
+python3 annotator.sailor.py --gtf c_elegans.PRJNA13758.WS275.canonical_geneset.gtf --fwd GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.fwd.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed --rev GSF1440-WW206-2_S6_R1_001_trimmed.fq_Aligned.sortedByCoord.out.rev.sorted.rmdup.readfiltered.formatted.varfiltered.snpfiltered.ranked.bed --wb c.elegans.WS275.annotation.final.bed --o /N/slate/by6/GSF1440_1441/sailor/N2.annotated.sites.csv
+
